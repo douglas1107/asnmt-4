@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="./data.js"></script>
+        
+        <title>Pet Adoption</title>
+        <style>
+            .card{
+                border-width: 4px;
+                border-style: solid;
+                border-color: #dee2e6;
+                height: 600px;
+                margin-bottom: 30px;
+            }
+
+            .card-content{
+                font-size: 18px;
+                text-align: left;
+            }
+
+            .fa-mars{
+                color: blue;
+            }
+
+            .fa-venus{
+                color: pink;
+            }
+
+            #pagination{
+                margin-top: 20px;
+            }
+
+            .page-link{
+                cursor: pointer;
+            }
+
+            .btn-pagination {
+                color: #007bff;
+                border-color: #007bff;
+            }
+
+            .btn-pagination.active {
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+
+
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row" id="petCards">
+            </div>
+            <div id="pagination" class="text-center"></div>
+        </div>
+
+        <script>
+            var petsPerPage = 9;
+            var currentPage = 1;
+            var totalPages = Math.ceil(pets.length / petsPerPage);
+            
+            function displayPetCards() {
+                var petCardsContainer = document.getElementById('petCards');
+                petCardsContainer.innerHTML = '';
+    
+                var startIndex = (currentPage - 1) * petsPerPage;
+                var endIndex = Math.min(startIndex + petsPerPage, pets.length);
+
+
+                for(var i = startIndex; i < endIndex; i++) {
+                    var pet = pets[i];
+                    var genderIcon = pet.sex === 'Male' ? 'mars' : 'venus';
+                    petCardsContainer.innerHTML += `
+                        <div class="col-md-4">
+                            <div class="card text-center" style="height: 700px;">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="font-size: 30px;">${pet.name} <i class="fas fa-${genderIcon}"></i></h5>
+                                    <img src="./images/${pet.name}.jpeg">
+                                    <hr>
+                                    <p class="card-text card-content ">Type: ${pet.type}</p>
+                                    <p class="card-text card-content">Breed: ${pet.breed}</p>
+                                    <p class="card-text card-content">Sex: ${pet.sex}</p>
+                                    <p class="card-text card-content">Color: ${pet.color}</p>
+                                    <p class="card-text card-content">Age: ${pet.age}</p>
+                                    <p class="card-text"><a href="details.html?index=${i}">Click here to find out more about ${pet.name}</a></p>
+                                </div>  
+                            </div>
+                        </div>
+                    `;
+                }
+
+                updatePagination();
+            }
+    
+            function updatePagination() {
+                var paginationContainer = document.getElementById('pagination');
+                paginationContainer.innerHTML = '';
+    
+                for(var i = 1; i <= totalPages; i++) {
+                    paginationContainer.innerHTML += `
+                        <button class="btn btn-pagination ${currentPage === i ? 'active' : ''}" onclick="changePage(${i})">${i}</button>
+                    `;
+                }
+            }
+    
+            function changePage(page) {
+                currentPage = page;
+                displayPetCards();
+            }
+    
+            displayPetCards();
+        </script>
+
+
+    </body>
+</html>
+
+
