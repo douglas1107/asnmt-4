@@ -3,6 +3,7 @@
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="./data.js"></script>
         
         <title>Pet Adoption</title>
@@ -51,6 +52,88 @@
         </style>
     </head>
     <body>
+        <!-- Create Button -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPetModal">
+            Create Pet
+        </button>
+        <div class="modal fade" id="createPetModal" tabindex="-1" aria-labelledby="createPetModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createPetModalLabel">Create Pet</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="createPetForm">
+                            <div class="mb-3">
+                                <label for="newPetName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="newPetName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetType" class="form-label">Type</label>
+                                <select class="form-select" id="newPetType" required>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetBreed" class="form-label">Breed</label>
+                                <input type="text" class="form-control" id="newPetBreed" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetSex" class="form-label">Sex</label>
+                                <select class="form-select" id="newPetSex" required>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetColor" class="form-label">Color</label>
+                                <input type="text" class="form-control" id="newPetColor" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetSpayed" class="form-label">Spayed/Neutered</label>
+                                <select class="form-select" id="newPetSpayed" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetAge" class="form-label">Age</label>
+                                <input type="text" class="form-control" id="newPetAge" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetChip" class="form-label">Chip</label>
+                                <select class="form-select" id="newPetChip" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetAbout" class="form-label">About</label>
+                                <textarea class="form-control" id="newPetAbout" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetId" class="form-label">ID</label>
+                                <input type="text" class="form-control" id="newPetId" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPetStatus" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="newPetStatus" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="createPetSubmit">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Edit Button -->
+
+        <!-- Delete Button-->
 
         <div class="container">
             <div class="row" id="petCards">
@@ -111,8 +194,42 @@
                 currentPage = page;
                 displayPetCards();
             }
-    
+
             displayPetCards();
+            ///// Might not keep and switch to Json format all below
+            document.getElementById('createPetSubmit').addEventListener('click', function() {
+            var newPetName = document.getElementById('newPetName').value;
+            var newPetType = document.getElementById('newPetType').value;
+            var newPetBreed = document.getElementById('newPetBreed').value;
+            var newPetSex = document.getElementById('newPetSex').value;
+            var newPetColor = document.getElementById('newPetColor').value;
+            var newPetSpayed = document.getElementById('newPetSpayed').value;
+            var newPetAge = document.getElementById('newPetAge').value;
+            var newPetChip = document.getElementById('newPetChip').value;
+            var newPetAbout = document.getElementById('newPetAbout').value;
+            var newPetId = document.getElementById('newPetId').value;
+            var newPetStatus = document.getElementById('newPetStatus').value;
+
+            var newPet = {
+                name: newPetName,
+                type: newPetType,
+                breed: newPetBreed,
+                sex: newPetSex,
+                color: newPetColor,
+                spayed: newPetSpayed,
+                age: newPetAge,
+                chip: newPetChip,
+                about: newPetAbout,
+                id: newPetId,
+                status: [newPetStatus]
+            };
+
+            pets.push(newPet);
+
+            var createPetModal = new bootstrap.Modal(document.getElementById('createPetModal'));
+            createPetModal.hide();
+            displayPetCards();
+        });
         </script>
 
 
